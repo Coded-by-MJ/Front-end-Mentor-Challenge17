@@ -60,10 +60,10 @@ const SearchCountryPage = () => {
 
 
 
-export const searchLoader =  ({ params }) => {
+export const searchLoader =  async ({ params }) => {
   const country = params.id
    store.dispatch(updateSearchWord(country))
-   store.dispatch(getSearchCountry(country))
+   await store.dispatch(getSearchCountry(country))
    return country
  
 }

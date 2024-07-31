@@ -200,9 +200,9 @@ const CountryPage = () => {
 
 
 
-export const countryLoader =  ({ params }) => {
+export const countryLoader =  async ({ params }) => {
   const country = params.id;
-  store.dispatch(getCountry(country))
+  await store.dispatch(getCountry(country))
   return country;
  
 }

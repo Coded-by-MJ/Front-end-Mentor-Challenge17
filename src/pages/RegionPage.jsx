@@ -67,9 +67,9 @@ const RegionPage = () => {
 
 
 
-export const regionLoader =  ({ params }) => {
+export const regionLoader =  async ({ params }) => {
   const region = params.id
-  store.dispatch(getRegion(region))
+  await store.dispatch(getRegion(region))
   return region;
  
 }
