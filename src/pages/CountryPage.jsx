@@ -26,7 +26,7 @@ const CountryPage = () => {
 
  
 
-  const common = name.common ?? "N/A";
+  const common = name?.common ?? "N/A";
   const { nativeName } = name;
   const {svg = "", alt = "Flag"} = flags
 
