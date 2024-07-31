@@ -19,7 +19,7 @@ const mainCity = capital;
 
      <img
          src={svg}
-        className="object-cover object-[center_top] w-full h-[250px] rounded-t-md"
+        className="object-cover object-center w-full h-[250px] rounded-t-md"
         alt={alt ? alt : countryName} 
      />
     

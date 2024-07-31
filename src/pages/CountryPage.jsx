@@ -71,7 +71,7 @@ const CountryPage = () => {
           <img 
           src={svg}
           alt={alt ? alt : common} 
-          className="w-full max-w-[550px]  max-h-[400px]  h-full object-cover object-[center_top]
+          className="w-full max-w-[550px]  max-h-[400px]  h-full object-cover object-center
            shadow-sm shadown-slate-500/30  dark:shadow-slate-800/30
           "
           />
