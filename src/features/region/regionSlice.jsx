@@ -39,7 +39,7 @@ const regionSlice = createSlice({
             state.isLoading = true;
           })
           .addCase(getRegion.fulfilled, (state, action) => {
-            // console.log(action);
+            
             state.isLoading = false;
             state.region = action.payload;
 

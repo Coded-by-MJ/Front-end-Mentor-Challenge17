@@ -1,4 +1,7 @@
 import { Link } from "react-router-dom";
+import { memo } from "react";
+
+
 
 const Card = ({ name, flags, population, capital, region }) => {
 
@@ -47,5 +50,5 @@ const mainCity = capital;
 
 
 
-export default Card
+export default memo(Card)
 

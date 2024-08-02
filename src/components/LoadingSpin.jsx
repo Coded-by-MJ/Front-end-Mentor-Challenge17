@@ -1,5 +1,5 @@
 import ClipLoader from "react-spinners/ClipLoader";
-
+import { memo } from "react";
 
 
 
@@ -21,4 +21,4 @@ const LoadingSpin = ({loading}) => {
   
 }
 
-export default LoadingSpin
+export default memo(LoadingSpin)
