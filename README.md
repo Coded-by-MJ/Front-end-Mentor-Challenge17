@@ -33,7 +33,7 @@ Users should be able to:
 ### Links
 
 - Solution URL: [Frontend Mentor Solution](https://www.frontendmentor.io/solutions/rest-countries-api-with-color-theme-switcher-using-react-and-redux-ITlHF9XOif)
-- Live Site URL: [Live Site](https://front-end-mentor-challenge17.vercel.app/)
+- Live Site URL: [Live Site](https://mj-rest-countries-api.vercel.app/)
 
 ## My process
 

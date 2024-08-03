@@ -20,10 +20,16 @@ const HomePage = () => {
   const dispatch = useDispatch();
 
   useEffect(()  => {
-       dispatch(getAllCountries())
-       dispatch(updateSearchWord(''))
-
-  },[])
+    const handleHomePage = () => {
+      dispatch(updateSearchWord(''))
+      
+      if(countries.length === 0){
+        dispatch(getAllCountries())
+      }
+    }
+     handleHomePage()
+       
+  },[countries])
 
 
 
