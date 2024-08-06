@@ -44,6 +44,7 @@ Users should be able to:
 - CSS Grid
 - TailWind CSS
 - Mobile-first workflow
+- React Query
 - [React](https://reactjs.org/) - JS library
 
 ## Author

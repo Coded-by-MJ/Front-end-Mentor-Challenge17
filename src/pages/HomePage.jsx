@@ -1,12 +1,12 @@
-import { useSelector, useDispatch } from "react-redux"
-
+import { useQuery } from "@tanstack/react-query"
+import { useEffect, useContext } from "react"
+import { SearchContext } from "../provider/SearchCountryProvider.jsx"
+import { getAllCountries } from "../api/countries.jsx"
 import InputSearch from "../components/InputSearch"
 import Card from "../components/Card"
 import FilterDropDown from "../components/FilterDropDown"
 import LoadingSpin from "../components/LoadingSpin.jsx"
-import { useEffect } from "react"
-import { getAllCountries } from "../features/all/allCountriesSlice.jsx"
-import { updateSearchWord } from "../features/search/searchSlice.jsx"
+
 
 
 
@@ -15,23 +15,43 @@ import { updateSearchWord } from "../features/search/searchSlice.jsx"
 
 const HomePage = () => {
 
-  const { countries, isLoading } = useSelector(store => store.allCountries) 
+  let homeContent;
+  const  { updateCountryName } = useContext(SearchContext);
 
-  const dispatch = useDispatch();
+   const { data, error, status } = useQuery({
+         queryKey: ["allCountries"],
+         queryFn: getAllCountries,
+         staleTime: 1000 * 60 * 5,
+        
+   })
 
-  useEffect(()  => {
-    const handleHomePage = () => {
-      dispatch(updateSearchWord(''))
-      
-      if(countries.length === 0){
-        dispatch(getAllCountries())
-      }
+   useEffect(()  => {
+       updateCountryName("")
+    },[])
+
+   
+
+
+   
+    if(status === "pending") {
+       homeContent = (<LoadingSpin loading={true} /> )
     }
-     handleHomePage()
-       
-  },[countries])
+    else if(status === "error"){
+      
+       homeContent = (<h1 className="text-2xl text-center mt-5 dark:text-white text-very-dark-blue-text">{JSON.stringify(error.message)}</h1>)
+    }else{
+      homeContent = ( <div className="grid grid-auto-fill justify-center gap-16 md:gap-24">
 
+                     {
+    
+                      data.map((item, idx) => (
+                         <Card key={idx} {...item} /> 
+                          ))
 
+                     }
+                    </div>
+                  )
+    }
 
 
 
@@ -45,24 +65,8 @@ const HomePage = () => {
          <InputSearch />
          <FilterDropDown />
       </div>
-
-      { isLoading
-
-       ? (<LoadingSpin loading={isLoading} /> )
-
-      : ( <div className="grid grid-auto-fill justify-center gap-16 md:gap-24">
-
-        {
-
-          countries.map((item, idx) => (
-            <Card key={idx} {...item} /> 
-          ))
-        }
-
-        </div>
-      )
-
-      }
+      
+        {homeContent}
     </div>
 
   )

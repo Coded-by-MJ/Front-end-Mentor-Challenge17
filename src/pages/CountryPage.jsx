@@ -1,10 +1,8 @@
-
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import BackArrowIcon from "../components/BackArrowIcon";
-import { useSelector } from "react-redux";
-import { store } from "../store";
-import { getCountry } from "../features/country/countrySlice";
 import LoadingSpin from "../components/LoadingSpin";
+import {  useQuery, } from "@tanstack/react-query";
+import { getCountry } from "../api/countries";
 
 
 
@@ -12,43 +10,51 @@ import LoadingSpin from "../components/LoadingSpin";
 
 const CountryPage = () => {
 
-  const { country,  isLoading} = useSelector(store => store.country)
+   
+  const { id } = useParams();
+ 
+
+  const {data, status} = useQuery({
+      queryKey: ['country', id],
+      queryFn: () => getCountry(id),
+  })
+
+
+ 
     
 
 
 
- const { name, flags, region, currencies,
-  languages, tld, subregion, borderCountries,
-  capital, population } = country;
 
-
+  if(status === "pending") {
+     return (<LoadingSpin loading={true} /> )
+  }
+  if(status === "error"){
+   
+    return (<h1 className="text-2xl text-center mt-5 dark:text-white text-very-dark-blue-text">{`This country("${id}") doesn't exist`}</h1>)
   
-
- 
-
-  const common = name?.common ?? "N/A";
-  const { nativeName } = name;
-  const {svg = "", alt = "Flag"} = flags
-
-  const currency = Object.values(currencies).map(currency => currency.name);
-  const allLanguages = Object.values(languages).map(language => language);
-  const allNativeNames = Object.values(nativeName).map(native => native.common);
-
-
-
-
-
-
-
-  if(isLoading && Object.keys(country).length < 1){
-   return (   <LoadingSpin loading={isLoading} /> )
   }
 
 
 
+  const { name, flags, region, currencies,
+    languages, tld, subregion, borderCountries,
+    capital, population } = data;
+  
+    const common = (name && name.common) ?? "N/A";
+    const nativeName = name?.nativeName ?? "N/A";
+    const {svg = "", alt = "Flag"} = flags
+  
+    const currency = Object.values(currencies).map(currency => currency.name);
+    const allLanguages = Object.values(languages).map(language => language);
+    const allNativeNames = Object.values(nativeName).map(native => native.common);
+
+  
+
 
 
   return (
+    
     <section className="min-h-screen w-full py-6 px-5 flex flex-col gap-16 "
     >
       <Link to="/"
@@ -130,7 +136,7 @@ const CountryPage = () => {
                  <p className="font-semibold text-md dark:text-white text-very-dark-blue-text">
                   Top Level Domain:
                  <span className="inline-block ml-1  font-light">
-                  { tld }
+                  { tld.join(", ") }
                  </span>
                  </p>
                
@@ -188,6 +194,7 @@ const CountryPage = () => {
        </div>
      
     </section>
+  
   )
 
 
@@ -199,13 +206,6 @@ const CountryPage = () => {
 
 
 
-
-export const countryLoader =  async ({ params }) => {
-  const country = params.id;
-  await store.dispatch(getCountry(country))
-  return country;
- 
-}
 
 
 

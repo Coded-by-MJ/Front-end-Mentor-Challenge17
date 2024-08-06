@@ -1,21 +1,24 @@
-import { useSelector, useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
-import SearchIcon from "./SearchIcon"
-import { updateSearchWord, getSearchCountry } from "../features/search/searchSlice"
+import { useContext } from "react";
+import { SearchContext } from "../provider/SearchCountryProvider";
+import { useNavigate } from "react-router-dom";
+import SearchIcon from "./SearchIcon";
+
+
 
 
 const InputSearch = () => {
-  const { searchWord } = useSelector(store => store.searchCountry)
-  
-  const dispatch = useDispatch();
+
   const navigate = useNavigate();
+
+  const { countryName, updateCountryName } = useContext(SearchContext);
+
+
 
   const handleGetSearch = (e) => {
     e.preventDefault();
-    if(searchWord.length < 1) return;
+    if(countryName.length < 1) return;
 
-    dispatch(getSearchCountry(searchWord))
-    navigate(`/search/${searchWord}`)
+    navigate(`/search/${countryName}`)
   }
 
 
@@ -30,8 +33,8 @@ const InputSearch = () => {
        <input
         type="text"
         name="country"
-        value={searchWord}
-        onChange={(e) => dispatch(updateSearchWord(e.target.value))}
+        value={countryName}
+        onChange={(e) => updateCountryName(e.target.value)}
         placeholder="Search for a country..."
         className="text-dark-gray font-light dark:text-white text-md bg-transparent outline-none placeholder:text-dark-gray focus:outline-none flex-grow dark:placeholder:text-white"
 

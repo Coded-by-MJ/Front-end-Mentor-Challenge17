@@ -1,10 +1,10 @@
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import InputSearch from "../components/InputSearch"
 import Card from "../components/Card"
 import LoadingSpin from "../components/LoadingSpin"
 import FilterDropDown from "../components/FilterDropDown" 
-import { useSelector } from "react-redux"
-import { store } from "../store"
-import { getSearchCountry, updateSearchWord } from "../features/search/searchSlice"
+import { getSearchCountry } from "../api/countries";
 
 
 
@@ -12,44 +12,54 @@ import { getSearchCountry, updateSearchWord } from "../features/search/searchSli
 
 const SearchCountryPage = () => {
     
-     const { searchCountry, isLoading, notFound, notFoundText } = useSelector(state => state.searchCountry)
+   const { id } = useParams();
+ 
 
+   const {data, status} = useQuery({
+       queryKey: ['country', id],
+       queryFn: () => getSearchCountry(id),
+       retry: 2,
+   })
+ 
+   let searchContent;
+ 
+   if(status === "pending") {
+      searchContent = (<LoadingSpin loading={true} /> )
+   }
+   else if(status === "error"){
+     
+      searchContent = (<h1 className="text-2xl text-center mt-5 dark:text-white text-very-dark-blue-text">{`No Results for '${id}'`}</h1>)
+   }else{
+
+     searchContent = ( <div className="grid grid-auto-fill justify-center gap-16 md:gap-24">
+
+    
+                         { data.length > 1 ? (
+                                              
+                                                 data.map((item, idx) => (
+                                                   <Card key={idx} {...item} /> 
+                                                 ))
+                                             ) :
+                                              ( <Card key={data[0]?.area ?? 1} {...data[0]} />)
+                        
+                                           
+                         }
+                      </div>
+                  )
+       } 
    
     
 
   return (
    
-    <div className="min-h-screen w-full py-6 px-5 
-    ">
+    <div className="min-h-screen w-full py-6 px-5 ">
 
       <div className="max-md:items-start flex mb-10 items-center gap-10 justify-between w-full flex-wrap">
          <InputSearch />
          <FilterDropDown />
       </div>
        
-      {
-          isLoading ? (
-               // Show loading spinner if data is being fetched
-               <LoadingSpin loading={isLoading} />
-           ) : notFound ? (
-             // Show "Not Found" message if no results are found
-                <h1 className="mx-auto text-very-dark-blue-text dark:text-white text-lg">
-                  {notFoundText}
-                </h1>
-            ) : (
-             <div className="grid grid-auto-fill justify-center gap-16 md:gap-24">
-                   { searchCountry.length < 1 ? (
-                // Show single Card if searchCountry has less than 1 item
-                                     <Card key={searchCountry.area} {...searchCountry} />
-                                ) : (
-                      //          Map over searchCountry to show multiple Cards
-                                      searchCountry.map((item, idx) => (
-                                         <Card key={idx} {...item} /> // Use a unique identifier if available
-                                        ))
-                    )}
-              </div>
-           )
-       }
+      {searchContent}
 
     </div>
 
@@ -60,13 +70,6 @@ const SearchCountryPage = () => {
 
 
 
-export const searchLoader =  async ({ params }) => {
-  const country = params.id
-   store.dispatch(updateSearchWord(country))
-   await store.dispatch(getSearchCountry(country))
-   return country
- 
-}
 
 
 

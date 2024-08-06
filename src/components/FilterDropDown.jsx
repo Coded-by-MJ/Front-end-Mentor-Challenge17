@@ -3,17 +3,18 @@ import { Link } from "react-router-dom"
 import DropDownIcon from "./DropDownIcon"
 
 
+
 const FilterDropDown = () => {
 
 const regions = ['Africa', 'America', 'Asia', 'Europe', 'Oceania']
 
-const [showDropDown, setShowDropDown] = useState(false)
+const [showDropDown, setShowDropDown] = useState(false);
+
 
 
   const handleDropDown = () => {
     setShowDropDown(!showDropDown)
   }
-
 
 
 

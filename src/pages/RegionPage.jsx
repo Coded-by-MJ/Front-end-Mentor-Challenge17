@@ -1,25 +1,63 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
+import { SearchContext } from "../provider/SearchCountryProvider";
 import InputSearch from "../components/InputSearch"
 import Card from "../components/Card"
 import FilterDropDown from "../components/FilterDropDown"  
-import { useSelector, useDispatch } from "react-redux" 
-import { getRegion } from "../features/region/regionSlice"
-import { store } from "../store"
 import LoadingSpin from "../components/LoadingSpin"
-import { updateSearchWord } from "../features/search/searchSlice";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getRegion } from "../api/countries";
 
 
 
 
 const RegionPage = () => {
+ 
+  let regionContent;
 
-  const { region, isLoading } = useSelector(store => store.region) 
+  const  { updateCountryName } = useContext(SearchContext);
+  const { id } = useParams()
 
- const  dispatch = useDispatch();
+  const { error, status, data } = useQuery({
+      queryKey: ["region", id],
+      queryFn: () => getRegion(id)
+  })
+
 
   useEffect(()  => {
-    dispatch(updateSearchWord(''))
+    updateCountryName("")
 },[])
+
+
+
+if(status === "pending") {
+  regionContent = (<LoadingSpin loading={true} /> )
+}
+else if(status === "error"){
+ 
+  regionContent = (<h1 className="text-2xl text-center mt-5 dark:text-white text-very-dark-blue-text">{JSON.stringify(error.message)}</h1>)
+
+}else{
+ regionContent = ( <div className="grid grid-auto-fill justify-center gap-16 md:gap-24">
+
+                {
+
+                 data.map((item, idx) => (
+                    <Card key={idx} {...item} /> 
+                     ))
+
+                }
+               </div>
+             )
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -34,23 +72,8 @@ const RegionPage = () => {
       </div>
 
 
-      {   isLoading
-
-             ? (<LoadingSpin loading={isLoading} /> )
-
-            : ( 
-                 <div className="grid grid-auto-fill justify-center gap-16 md:gap-24">
-
-                     {
-
-                      region.map((item, idx) => (
-                        <Card key={idx} {...item} /> 
-                      ))
-                    }
-               </div>
-            )
-
-        }
+      { regionContent } 
+        
     </div>
 
   )
@@ -62,16 +85,5 @@ const RegionPage = () => {
 
 
 
-
-
-
-
-
-export const regionLoader =  async ({ params }) => {
-  const region = params.id
-  await store.dispatch(getRegion(region))
-  return region;
- 
-}
 
 export default RegionPage
