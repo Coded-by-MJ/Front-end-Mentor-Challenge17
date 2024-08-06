@@ -10,24 +10,24 @@
     }
   ],
   "routes": [
-   
+    
     {
       "src": "/api/getAllCountries",
-      "dest": "/api/getAllCountries.js"
+      "dest": "/api/getAllCountries.jsx"
     },
     {
       "src": "/api/getRegion/(.*)",
-      "dest": "/api/getRegion.js"
+      "dest": "/api/getRegion.jsx"
     },
     {
       "src": "/api/getSearchCountry/(.*)",
-      "dest": "/api/getSearchCountry.js"
+      "dest": "/api/getSearchCountry.jsx"
     },
     {
       "src": "/api/getCountry/(.*)",
-      "dest": "/api/getCountry.js"
+      "dest": "/api/getCountry.jsx"
     },
-   
+  
     {
       "src": "/(.*)",
       "dest": "/index.html"
