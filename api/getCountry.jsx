@@ -1,26 +1,6 @@
-import axios from "axios"
+import axios from "axios";
 
-const getAllCountries = async () => {
 
-    const res = await axios.get("https://restcountries.com/v3.1/all")
-    return res.data
-    
-
-}
-
-const getRegion = async (region) => {
-    const res = await axios.get(`https://restcountries.com/v3.1/region/${region.trim()}`)
-    return res.data
-    
-
-}
-
-const getSearchCountry = async (searchCountry) => {
-    const res = await axios.get(`https://restcountries.com/v3.1/name/${searchCountry.trim()}`)
-    return res.data
-    
-
-}
 
 
 const alphaUrl = "https://restcountries.com/v3.1/alpha/"
@@ -46,6 +26,4 @@ const getCountry = async (countryName) => {
 
 
 
-
-
-export  { getAllCountries, getRegion, getSearchCountry, getCountry }
+export default getCountry;

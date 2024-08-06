@@ -6,7 +6,7 @@ import FilterDropDown from "../components/FilterDropDown"
 import LoadingSpin from "../components/LoadingSpin"
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getRegion } from "../api/countries";
+import getRegion from "../../api/getRegion";
 
 
 

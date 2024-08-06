@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import BackArrowIcon from "../components/BackArrowIcon";
 import LoadingSpin from "../components/LoadingSpin";
 import {  useQuery, } from "@tanstack/react-query";
-import { getCountry } from "../api/countries";
+import getCountry from "../../api/getCountry";
 
 
 

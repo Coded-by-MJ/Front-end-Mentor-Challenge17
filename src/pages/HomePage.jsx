@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { useEffect, useContext } from "react"
 import { SearchContext } from "../provider/SearchCountryProvider.jsx"
-import { getAllCountries } from "../api/countries.jsx"
+import getAllCountries from "../../api/getAllCountries.jsx"
 import InputSearch from "../components/InputSearch"
 import Card from "../components/Card"
 import FilterDropDown from "../components/FilterDropDown"

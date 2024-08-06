@@ -4,7 +4,7 @@ import InputSearch from "../components/InputSearch"
 import Card from "../components/Card"
 import LoadingSpin from "../components/LoadingSpin"
 import FilterDropDown from "../components/FilterDropDown" 
-import { getSearchCountry } from "../api/countries";
+import getSearchCountry from "../../api/getSearchCountry";
 
 
 
