@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams } from "@tanstack/react-router";
 import BackArrowIcon from "../components/BackArrowIcon";
 import LoadingSpin from "../components/LoadingSpin";
 import {  useQuery, } from "@tanstack/react-query";
@@ -11,13 +11,14 @@ import getCountry from "../../api/getCountry";
 const CountryPage = () => {
 
    
-  const { id } = useParams();
+  const { id } = useParams({strict: false});
  
 
   const {data, status} = useQuery({
       queryKey: ['country', id],
       queryFn: () => getCountry(id),
   })
+
 
 
  

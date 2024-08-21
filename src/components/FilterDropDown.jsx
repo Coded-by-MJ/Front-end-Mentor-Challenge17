@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link } from "@tanstack/react-router"
 import DropDownIcon from "./DropDownIcon"
 
 
@@ -35,7 +35,10 @@ const [showDropDown, setShowDropDown] = useState(false);
         {
           regions.map(region => (
             <li key={region}>
-              <Link to={`/region/${region}`}
+              <Link to={`/`}
+                search={{
+                   region: region,
+                }}
                className="text-[14px] inline-block w-full font-semibold text-very-dark-blue-text dark:text-white no-underline"
               >
               {region}

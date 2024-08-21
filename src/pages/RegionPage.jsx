@@ -4,23 +4,27 @@ import InputSearch from "../components/InputSearch"
 import Card from "../components/Card"
 import FilterDropDown from "../components/FilterDropDown"  
 import LoadingSpin from "../components/LoadingSpin"
-import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import getRegion from "../../api/getRegion";
 
 
 
 
-const RegionPage = () => {
+const RegionPage = ({ region }) => {
  
   let regionContent;
 
   const  { updateCountryName } = useContext(SearchContext);
-  const { id } = useParams()
+
+
+
+
+
+
 
   const { error, status, data } = useQuery({
-      queryKey: ["region", id],
-      queryFn: () => getRegion(id)
+      queryKey: ["region", region],
+      queryFn: () => getRegion(region)
   })
 
 

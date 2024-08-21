@@ -1,17 +1,16 @@
+
 import {
-  Route,
-  createBrowserRouter,
-  createRoutesFromElements,
-  RouterProvider
-} from "react-router-dom";
+  createRouter,
+  createRoute,
+  createRootRoute,
+  RouterProvider,
+} from "@tanstack/react-router"
 
 
 
 import MainLayout from "./layout/MainLayout";
 import HomePage from "./pages/HomePage";
-import RegionPage from "./pages/RegionPage";
 import CountryPage from "./pages/CountryPage";
-import SearchCountryPage from "./pages/SearchCountryPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import SearchCountryProvider from "./provider/SearchCountryProvider";
 
@@ -20,18 +19,33 @@ function App() {
 
 
 
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-    <Route path="/" element={<MainLayout />}>
-      <Route index element={<HomePage  />}/>
-      <Route path="/region/:id" element={<RegionPage />} />
-      <Route path="/country/:id" element={<CountryPage />} /> 
-      <Route path="/search/:id" element={<SearchCountryPage />} />  
-      <Route path="*" element={<NotFoundPage />} /> 
-    </Route>
-    
-  )
-  );
+  const rootRoute = createRootRoute({
+    component: MainLayout,
+ })
+
+ const homeRoute = createRoute({
+   getParentRoute: () => rootRoute,
+   path: '/',
+   component: HomePage
+ }) 
+ const singleCountryRoute = createRoute({
+   getParentRoute: () => rootRoute,
+   path: '/country/$id',
+   component: CountryPage
+ }) 
+
+
+  const routeTree = rootRoute.addChildren([
+    homeRoute, singleCountryRoute,
+
+  ])
+
+
+  
+  const router = createRouter({ routeTree,
+    defaultNotFoundComponent: NotFoundPage
+  })
+
 
   return  (
        <SearchCountryProvider >

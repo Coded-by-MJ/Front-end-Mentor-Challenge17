@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import InputSearch from "../components/InputSearch"
 import Card from "../components/Card"
@@ -10,14 +9,14 @@ import getSearchCountry from "../../api/getSearchCountry";
 
 
 
-const SearchCountryPage = () => {
+const SearchCountryPage = ({ country }) => {
     
-   const { id } = useParams();
+   
  
 
    const {data, status} = useQuery({
-       queryKey: ['country', id],
-       queryFn: () => getSearchCountry(id),
+       queryKey: ['country', country],
+       queryFn: () => getSearchCountry(country),
        retry: 2,
    })
  
@@ -28,7 +27,7 @@ const SearchCountryPage = () => {
    }
    else if(status === "error"){
      
-      searchContent = (<h1 className="text-2xl text-center mt-5 dark:text-white text-very-dark-blue-text">{`No Results for '${id}'`}</h1>)
+      searchContent = (<h1 className="text-2xl text-center mt-5 dark:text-white text-very-dark-blue-text">{`No Results for '${country}'`}</h1>)
    }else{
 
      searchContent = ( <div className="grid grid-auto-fill justify-center gap-16 md:gap-24">

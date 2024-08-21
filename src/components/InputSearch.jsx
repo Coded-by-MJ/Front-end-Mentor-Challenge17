@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { SearchContext } from "../provider/SearchCountryProvider";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "@tanstack/react-router";
 import SearchIcon from "./SearchIcon";
 
 
@@ -18,7 +18,10 @@ const InputSearch = () => {
     e.preventDefault();
     if(countryName.length < 1) return;
 
-    navigate(`/search/${countryName}`)
+    navigate({
+        to: '/',
+        search: {search: countryName},
+  })
   }
 
 

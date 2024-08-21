@@ -1,6 +1,6 @@
 import MoonIcon from "./MoonIcon"
 import useDarkMode from "./useDarkMode";
-import { NavLink } from "react-router-dom";
+import { Link }  from "@tanstack/react-router";
 
 const NavBar = () => {
 
@@ -17,10 +17,10 @@ const NavBar = () => {
     <header className="flex mb-[3px] translate-all justify-between shadow-md shadow-slate-500/10 dark:shadow-slate-800/10
     items-center w-full p-5 h-[80px] bg-white dark:bg-dark-blue"
     >
-        <NavLink to="/"
+        <Link to="/"
         className="text-very-dark-blue-text text-md font-extrabold dark:text-white no-underline">
             Where in the world?
-        </NavLink>
+        </Link>
          <button className="flex gap-2 items-center"
           onClick={toggleDarkMode}
          >
