@@ -40,11 +40,10 @@ Users should be able to:
 ### Built with
 
 - Semantic HTML5 markup
-- Flexbox
-- CSS Grid
 - TailWind CSS
 - Mobile-first workflow
-- React Query
+- Tanstack React Query
+- Tanstack React Router
 - [React](https://reactjs.org/) - JS library
 
 ## Author
